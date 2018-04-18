@@ -4,7 +4,7 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/') }}"><img src="{{ url('images/optimus/logo-login.png') }}" alt="Optimus"><b>Optimus</b></a>
+            <a href="{{ url('/') }}"><img src="{{ url('images/optimus/logo-login.png') }}" alt="Doctor"><b>Doctor</b></a>
         </div>
 
         <div class="login-box-body">
@@ -44,8 +44,8 @@
 
                     <button type="submit" class="btn btn-block btn-success btn-block btn-flat">Sign In</button>
                     <br>
-                    Or<br>
-                    <a href="{{ url('/register') }}" class="">Register</a>
+
+
 
                 </div>
             </form>

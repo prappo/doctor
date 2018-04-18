@@ -5,11 +5,11 @@
 
         <span class="logo-mini"><img
                     src="@if(Auth::user()->theme == 'skin-black' || Auth::user()->theme == 'skin-black-light') @if(\App\Http\Controllers\Settings::getSettings('logo')==""){{ url('/images/optimus/logo-login.png')}} @else {{url('/uploads')}}/{{\App\Http\Controllers\Settings::getSoftwareSettings('logo')}} @endif @else {{ url('/images/optimus/logo-mini.png') }} @endif"
-                    alt="Optimus"></span>
+                    alt="Doctor"></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><img
                     src="@if(Auth::user()->theme == 'skin-black' || Auth::user()->theme == 'skin-black-light') @if(\App\Http\Controllers\Settings::getSettings('logo')=="") {{ url('/images/optimus/logo-login.png')}} @else {{url('/uploads')}}/{{\App\Http\Controllers\Settings::getSoftwareSettings('logo')}} @endif @else {{ url('/images/optimus/logo-mini.png') }} @endif"
-                    alt="Optimus"><b>Optimus</b></span>
+                    alt="Doctor"><b>Doctor</b></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
