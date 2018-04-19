@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -29,6 +30,15 @@ class UserController extends Controller
 
         } catch (\Exception $exception) {
             return $exception->getMessage();
+        }
+    }
+
+    public function addUserIndex()
+    {
+        if (Auth::user()->type == "admin") {
+            return view('user.add');
+        } else {
+            return view('error.404');
         }
     }
 
@@ -65,9 +75,10 @@ class UserController extends Controller
         }
     }
 
-    public function viewUsers(Request $request){
+    public function viewUsers(Request $request)
+    {
         $users = User::all();
-        return view('user.viewUsers',compact('users'));
+        return view('user.viewUsers', compact('users'));
     }
 
 }

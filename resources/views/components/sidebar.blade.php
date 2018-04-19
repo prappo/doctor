@@ -38,7 +38,7 @@
 
 
 
-                <li @if(Request::is('admin/user/add')) class="active" @endif ><a href="{{ url('/admin/user/add') }}"><i
+                <li @if(Request::is('user/add')) class="active" @endif ><a href="{{ url('/user/add') }}"><i
                                 class="fa fa-plus"></i> <span>{{trans('sidebar.Add User')}}</span>
                     </a></li>
 

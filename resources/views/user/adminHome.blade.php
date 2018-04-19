@@ -10,6 +10,16 @@
                 <h1>{{trans('dashboard.Dashboard')}}</h1>
             </section>
 
+            @if($users)
+
+                @foreach($users as $user)
+
+                    @if($user->isOnline())
+                        <li>{{$user->name}}</li>
+                    @endif
+
+                @endforeach
+            @endif
 
         </div>
 

@@ -9,8 +9,6 @@
             <section class="content-header">
                 <h1>{{trans('dashboard.Dashboard')}}</h1>
             </section>
-
-
         </div>
 
         @include('components.footer')

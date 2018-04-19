@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="{{ url(elixir('css/plugins.css')) }}">
     {{--custom css--}}
     <link rel="stylesheet" href="{{url('/opt/css/custom.css')}}">
-    <link rel="stylesheet" href="{{url('/opt/intro/introjs.css')}}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
 
     {{--<script src="{{url('/opt/sweetalert.min.js')}}"></script>--}}
@@ -48,7 +48,7 @@
     <![endif]-->
 
     {{--emoji --}}
-    <link rel="stylesheet" href="{{url('/opt/emoji/emojionearea.min.css')}}">
+
     <link rel="stylesheet" href="{{url('/css/style.css')}}">
     <link rel="stylesheet" href="{{url('/css/custome.css')}}">
     @yield('css')
@@ -78,31 +78,15 @@
 <script src="http://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
 <script src="http://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
-<script src="{{url('/opt/intro/intro.js')}}"></script>
-<script type="text/javascript" src="{{url('/opt/emoji/emojionearea.min.js')}}"></script>
+
+
 
 <script type="text/javascript" src="{{url('/opt/toast.js')}}"></script>
 
 
 <script>
 
-    $(document).ready(function () {
 
-        $('#intro').click(function () {
-            introJs().start();
-        });
-
-
-        if (document.getElementById('status')) {
-            $("#status").emojioneArea({
-                pickerPosition: "bottom"
-            });
-        }
-
-        if (document.getElementById('skype')) {
-            $("#message").emojioneArea();
-        }
-    });
     // notification start
 
 
