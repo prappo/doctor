@@ -20,8 +20,22 @@
                             {{\App\User::where('id',$call->from)->value('name')}} want to contact with you
                         </div>
                         <div class="box-footer">
-                            <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm</button>
-                            <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline</button>
+                            <div id="btnGroup">
+                                <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm</button>
+                                <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline</button>
+                            </div>
+
+                            <div style="display:none" id="job">
+                                <h1 id="timer"></h1>
+                                <button data-id="{{$call->id}}" data-to="{{$call->to}}" data-from="{{$call->from}}"
+                                        id="timerStop"
+                                        class="btn btn-success btn-block">Finish
+                                </button>
+                            </div>
+                            <div id="msgDiv" style="display: none">
+                                <h3 style="color: green" id="msg"></h3>
+                            </div>
+
                         </div>
                     </div>
 
@@ -30,6 +44,7 @@
 
             <div class="col-md-6">
                 <div class="status">
+
 
                 </div>
             </div>
@@ -41,6 +56,7 @@
     </div>
 @endsection
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timer.jquery/0.7.1/timer.jquery.min.js"></script>
     <script>
 
 
@@ -90,8 +106,8 @@
                 text: "Do you want to confirm this request from patient ?",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, cancel it!",
+                confirmButtonColor: "green",
+                confirmButtonText: "Yes",
                 closeOnConfirm: false,
                 html: true
             }, function () {
@@ -104,6 +120,9 @@
                     success: function (data) {
                         if (data == "success") {
                             swal("Success", "Confirmed", "success");
+                            $('#btnGroup').hide();
+                            $('#job').show();
+                            $('#timer').timer();
 
                         } else {
                             swal("Error", data, "error");
@@ -117,6 +136,37 @@
             });
 
         });
+
+        $('#timerStop').click(function () {
+            var to = $(this).attr('data-to');
+            var from = $(this).attr('data-from');
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '{{url('/call/done')}}',
+                data: {
+                    'id': id,
+                    'time':$('#timer').text()
+                },
+                success: function (data) {
+                    if (data == "success") {
+                        $('#timer').timer('pause');
+                        $('#job').hide(200);
+                        swal("Wow !", "Job done! Thank you for your service", "success");
+                        $("#msg").html("Your service time : " + $("#timer").text());
+                        $("#msgDiv").show(200);
+                    } else {
+                        swal("Error", data, "error");
+                    }
+                },
+                error: function (data) {
+                    swal("Error", "Something went wrong", "error");
+                    console.log(data.responseText);
+                }
+            });
+
+
+        })
     </script>
 @endsection
 

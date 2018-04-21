@@ -18,6 +18,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/call','CallController@call');
     Route::post('/call/decline','CallController@decline');
     Route::post('/call/confirm','CallController@confirm');
+    Route::post('/call/done','CallController@done');
+    Route::post('/call/sync','CallController@sync');
 
     });
 

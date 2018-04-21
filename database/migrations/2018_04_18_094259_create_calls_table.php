@@ -18,6 +18,10 @@ class CreateCallsTable extends Migration
             $table->string('from');
             $table->string('to');
             $table->string('status');
+            $table->string('seen')->nullable();
+            $table->string('job_time')->nullable();
+            $table->string('confirmation_seen')->nullable();
+            $table->string('feedback_seen')->nullable();
             $table->timestamps();
         });
     }

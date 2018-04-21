@@ -83,18 +83,27 @@
                             </div>
 
                             <div class="box-body">
+                                @if(\App\Call::where('from',Auth::user()->id)->where('status','pending')->count() == 1)
+                                    <div id="goo">
+                                        <input type="hidden" id="jobId"
+                                               value="{{\App\Call::where('from',Auth::user()->id)->where('status','pending')->value('id')}}">
+                                    </div>
 
+                                @endif
                                 @foreach(\App\Call::where('from',Auth::user()->id)->where('status','pending')->get() as $call)
                                     <div class="box">
                                         <div class="box-header">
                                             {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
                                         </div>
                                         <div class="box-body">
-                                            You sent a request to {{\App\User::where('id',$call->to)->value('name')}}. Please wait.
+                                            You sent a request to {{\App\User::where('id',$call->to)->value('name')}}.
+                                            Please wait.
                                         </div>
                                         <div class="box-footer">
 
-                                            <button class="btn btn-danger btn-decline" data-id="{{$call->id}}"><i class="fa fa-times"></i> Cancel the request</button>
+                                            <button class="btn btn-danger btn-decline" data-id="{{$call->id}}"><i
+                                                        class="fa fa-times"></i> Cancel the request
+                                            </button>
                                         </div>
                                     </div>
 
@@ -117,6 +126,13 @@
 @endsection
 @section('js')
     <script>
+
+        if (document.getElementById('goo')) {
+            var jobId = $("#jobId").val();
+            setInterval(function () {
+                sync(jobId);
+            }, 3000);
+        }
         $('.btn-doc').click(function () {
             var to = $(this).attr('data-to');
             var from = $(this).attr('data-from');
@@ -134,7 +150,6 @@
             }, function () {
 
                 contact(from, to, name);
-                location.reload();
 
 
             });
@@ -152,9 +167,10 @@
                 },
                 success: function (data) {
                     if (data == "success") {
-                        $('#msg').html("A request sent to " + name + " . Please Wait");
+
+                        location.reload();
                     } else {
-                        swal("Error", data, "error");
+                        swal("Warning", data, "warning");
                     }
                 },
                 error: function (data) {
@@ -163,7 +179,6 @@
                 }
             })
         }
-
 
 
         $('.btn-decline').click(function () {
@@ -202,8 +217,39 @@
             });
 
         });
+
+
+        function sync(id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{url('/call/sync')}}',
+                data: {
+                    'id': id
+                },
+                success: function (data) {
+                    if (data.msg == "confirm") {
+                        doctorName = data.doctorName;
+                        doctorContact = data.doctorContact;
+                        swal("Accepted !", doctorName + " Accepted your request and here is his skype id : '" + doctorContact + "' \n He is online and waiting for you. Please contact him as soon as possible")
+                    } else if (data.msg == "done") {
+                        alert("Feed back form will appear");
+                    }
+
+
+                }
+            });
+        }
     </script>
 @endsection
+
+
+
+
+
+
+
+
+
 
 
 
