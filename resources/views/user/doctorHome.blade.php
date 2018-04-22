@@ -27,6 +27,10 @@
 
                             <div style="display:none" id="job">
                                 <h1 id="timer"></h1>
+                                <div class="form-group">
+                                    <label class="form-control">Prescription</label>
+                                    <textarea id="pTxt" class="form-control" rows="4" placeholder="Type here.."></textarea>
+                                </div>
                                 <button data-id="{{$call->id}}" data-to="{{$call->to}}" data-from="{{$call->from}}"
                                         id="timerStop"
                                         class="btn btn-success btn-block">Finish
@@ -146,7 +150,8 @@
                 url: '{{url('/call/done')}}',
                 data: {
                     'id': id,
-                    'time':$('#timer').text()
+                    'time':$('#timer').text(),
+                    'pTxt':$('#pTxt').val()
                 },
                 success: function (data) {
                     if (data == "success") {

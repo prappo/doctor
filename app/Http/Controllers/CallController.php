@@ -25,6 +25,7 @@ class CallController extends Controller
             $call->seen = "no";
             $call->confirmation_seen = "no";
             $call->feedback_seen = "no";
+            $call->p_seen = "no";
             $call->save();
             return "success";
         } catch (\Exception $exception) {
@@ -67,7 +68,8 @@ class CallController extends Controller
         try {
             Call::where('id', $request->id)->update([
                 'status' => 'done',
-                'job_time' => $request->time
+                'job_time' => $request->time,
+                'p_txt' => $request->pTxt
             ]);
             return "success";
         } catch (\Exception $exception) {
@@ -108,6 +110,20 @@ class CallController extends Controller
             ]);
         }
 
+        if (Call::where('id', $request->id)->value('status') == "done" && Call::where('id', $request->id)->value('p_seen') == "no") {
+            $pTxt = Call::where('id', $request->id)->value('p_txt');
+
+
+            Call::where('id', $request->id)->update([
+                "p_seen" => "yes"
+            ]);
+
+            return response()->json([
+                'msg' => 'p_seen',
+                'p_text' => $pTxt
+
+            ]);
+        }
 
 
     }

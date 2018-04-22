@@ -54,7 +54,7 @@
     @yield('css')
 </head>
 {{--<body class="hold-transition fixed sidebar-mini skin-red-light">--}}
-<body class="hold-transition fixed sidebar-mini  skin-red">
+<body class="hold-transition fixed sidebar-mini  skin-red sidebar-collapse">
 
 @yield('content')
 <script>

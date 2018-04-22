@@ -121,6 +121,37 @@
 
         </div>
 
+
+        // modal
+
+
+        <div class="modal modal-success fade" id="modal-feedback">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+                        <h4 class="modal-title">FeedBack</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Write your FeedBack</label>
+                            <textarea class="form-control" rows="3" placeholder="Write here ..."></textarea>
+                            <br>
+                            <a target="_blank" class="btn btn-primary" href="{{url('/prescription')."/".\App\Call::where('from',Auth::user()->id)->where('status','pending')->value('id')}}"><i class="fa fa-external-link"></i>  Click here to get your prescription</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button id="btnModalHide" type="button" class="btn btn-outline">Submit Feedback</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
         @include('components.footer')
     </div>
 @endsection
@@ -232,13 +263,19 @@
                         doctorContact = data.doctorContact;
                         swal("Accepted !", doctorName + " Accepted your request and here is his skype id : '" + doctorContact + "' \n He is online and waiting for you. Please contact him as soon as possible")
                     } else if (data.msg == "done") {
-                        alert("Feed back form will appear");
+                        $('#modal-feedback').modal();
+//                        alert("Feed back form will appear");
                     }
 
 
                 }
             });
         }
+
+        $('#btnModalHide').click(function () {
+            $('#modal-feedback').modal('hide');
+            swal("Thanks !", "Your feedback will help us", "success");
+        })
     </script>
 @endsection
 
