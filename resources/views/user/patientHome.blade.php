@@ -122,9 +122,6 @@
         </div>
 
 
-        // modal
-
-
         <div class="modal modal-success fade" id="modal-feedback">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -138,7 +135,8 @@
                             <label>Write your FeedBack</label>
                             <textarea class="form-control" rows="3" placeholder="Write here ..."></textarea>
                             <br>
-                            <a target="_blank" class="btn btn-primary" href="{{url('/prescription')."/".\App\Call::where('from',Auth::user()->id)->where('status','pending')->value('id')}}"><i class="fa fa-external-link"></i>  Click here to get your prescription</a>
+                            <button id="getP" class="btn btn-primary"><i
+                                        class="fa fa-external-link"></i> Click here to get your prescription</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -152,10 +150,228 @@
         </div>
         <!-- /.modal -->
 
+        <div class="modal" id="modal-prescription">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+
+                        <h4 class="modal-title">Your Prescription</h4>
+                        <button id="btnSave" class="btn btn-success"><i class="fa fa-download"></i> Download</button>
+                        <button data-dismiss="modal" class="btn btn-danger">Close</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div id="box" style="background: white" class="container">
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <b><h4 style="color:#35773B">Dr. Raihan Rabbani</h4></b>
+                                    <b style="color: #34298A">MBBS, FCPS, US Board Certified in Internal
+                                        Medicine</b><br>
+                                    <b style="color: #34298A">Consultant, Internal Medicine</b> <br>
+                                    <b style="color: #35773B">Email: doc1@email.com</b>
+                                </div>
+
+                                <div class="col-md-6 text-right">
+                                    <b><h4 style="color:#35773B">ডাঃ রাইহান রাব্বানি</h4></b>
+                                    <b style="color: #34298A">এমবিবিএস, এফসিপিএস, ইউএস বোরড সারটিফাইড ইন ইন্তারনাল
+                                        মেডিসিন</b><br>
+                                    <b style="color: #34298A">কন্সাল্টেন্ট, ইন্তারনাল মেডীসিন</b> <br>
+                                    <b style="color: #35773B">Email: doc1@email.com</b>
+                                </div>
+                            </div>
+                            <div id="statusTop" class="row">
+
+                                <div class="col-md-2">
+                                    <b>PDI-1232</b>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>Name: Prappo Islam Prince</b>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>SEX: M</b>
+                                </div>
+                                <div class="col-md-2">
+                                    <b>Age: 50</b>
+                                </div>
+                                <div class="col-md-2">
+                                    <b>Date: 02-04-2018</b>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div id="" class="col-md-4">
+                                    <h4><b style="color:#34298A">Chief Complaints :</b><br></h4>
+                                    <div class="text-left" style="padding-left: 10px" align="center">
+                                        <b>#38 Wks</b><br>
+                                        <b>#Weakness</b><br>
+                                        <b>#Joint pain</b>
+                                    </div>
+
+                                    <h4><b style="color:#34298A">General Examinations</b><br></h4>
+                                    <div class="text-left" style="padding-left: 10px" align="center">
+                                        <b>Pulse: 75</b><br>
+                                        <b>B/P: 120/80</b><br>
+
+                                    </div>
+
+                                    <h4><b style="color:#34298A">Advice for investigations</b><br></h4>
+                                    <div class="text-left" style="padding-left: 10px" align="center">
+                                        <b>USG of whole Abdomen</b><br>
+
+                                    </div>
+                                </div>
+
+                                <div id="rightDev" class="col-md-8">
+                                    <div style="padding:10px" class="row">
+                                        <img height="50" width="50" src="{{url('/images/optimus/rx.png')}}">
+                                    </div>
+                                    <div class="row">
+                                        <div class="text-left" style="padding-left: 10px" align="center">
+                                            <b>Tab. Zeefol -- ১-০-১ ------৩০ দিন</b><br>
+                                            <b>Tab. Zeefol -- ১-০-১ ------৩০ দিন</b><br>
+                                            <b>Tab. Zeefol -- ১-০-১ ------৩০ দিন</b><br>
+
+
+                                        </div>
+                                    </div>
+                                    <br><br>
+
+                                    <div class="row">
+                                        <div class="text-left" style="padding-left: 10px" align="center">
+                                            <h4><b style="color:blue">Advice:</b></h4>
+                                            <b>ভারি কাজ করবেন না </b><br>
+
+
+                                        </div>
+                                    </div>
+                                    <br><br>
+
+                                    <div class="row">
+                                        <div class="text-left" style="padding-left: 10px" align="center">
+                                            <h4><b style="color:blue">Next visit date:</b></h4>
+                                            <b>12-4-2018</b><br>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="statusBottom" class="row">
+
+                                <div class="col-md-4 text-left">চেম্বার / বাসা ঃ ফেনী প্রাইভেট হাসপাতাল
+                                    এস এস কে রদ ( হলি ক্রিসেন্ট স্কুল সংলগ্ন ) , ফেনী<br>
+                                    রোগী দেখার সময় ঃ
+                                    সকাল ৯টা - দুপুর ২ টা , রাত ৮টা - রাত ১০টা
+                                </div>
+                                <div class="col-md-4 text-center">
+
+                                </div>
+                                <div class="col-md-4 text-right">চেম্বার/ বাসা ঃ চৌধুরি জেনেরাল হাসপাতাল
+                                    চৌমুখি পৌরসভা , নোয়াখালি
+                                    রগী দেখার সময় ঃ বিকাল ৪টা - রাত ৮টা
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="modal-footer">
+
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
         @include('components.footer')
     </div>
 @endsection
+
+@section('css')
+    <style>
+        .modal-dialog {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .modal-content {
+            height: auto;
+            min-height: 100%;
+            border-radius: 0;
+        }
+
+        #statusTop {
+            border-top: 2px solid black;
+            border-bottom: 2px solid black;
+        }
+
+        #rightDev {
+            border-left: 2px solid black;
+            min-height: 130px;
+            padding: 20px;
+        }
+
+        #statusBottom {
+            border-top: 2px solid black;
+        }
+
+        .container {
+            border: 2px solid black;
+        }
+
+
+    </style>
+@endsection
+
+
 @section('js')
+    <script src="{{url('/js')}}/html2canvas.js"></script>
+    <script src="{{url('/js')}}/base64.js"></script>
+    <script src="{{url('/js')}}/canvas2image.js"></script>
+    <script>
+
+
+        $(function () {
+            $("#btnSave").click(function () {
+                html2canvas($("#box"), {
+                    onrendered: function (canvas) {
+                        theCanvas = canvas;
+                        document.body.appendChild(canvas);
+
+                        var url = canvas.toDataURL();
+                        $("<a>", {
+                            href: url,
+                            download: "prescription"
+                        })
+                            .on("click", function () {
+                                $(this).remove()
+                            })
+                            .appendTo("body")[0].click()
+
+                        // Convert and download as image
+//                    Canvas2Image.saveAsPNG(canvas);
+//                    $("#img-out").append(canvas);
+                        // Clean up
+                        //document.body.removeChild(canvas);
+                    }
+                });
+            });
+        });
+
+
+    </script>
     <script>
 
         if (document.getElementById('goo')) {
@@ -275,6 +491,10 @@
         $('#btnModalHide').click(function () {
             $('#modal-feedback').modal('hide');
             swal("Thanks !", "Your feedback will help us", "success");
+        });
+
+        $('#getP').click(function () {
+            $('#modal-prescription').modal();
         })
     </script>
 @endsection

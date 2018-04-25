@@ -54,7 +54,7 @@
     @yield('css')
 </head>
 {{--<body class="hold-transition fixed sidebar-mini skin-red-light">--}}
-<body class="hold-transition fixed sidebar-mini  skin-red sidebar-collapse">
+<body class="hold-transition fixed sidebar-mini  skin-red">
 
 @yield('content')
 <script>
@@ -78,6 +78,7 @@
 <script src="http://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
 <script src="http://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+
 
 
 

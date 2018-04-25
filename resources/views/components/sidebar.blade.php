@@ -20,20 +20,20 @@
             {{--admin menu--}}
             @if(Auth::user()->type == 'admin')
                 {{--<li class="treeview @if(Request::is('admin') || Request::is('user/add') || Request::is('user/list') || Request::is('admin/options')) active @endif">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-th"></i>--}}
-                        {{--<span>{{trans('sidebar.Admin Panel')}}</span>--}}
-                        {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                    {{--</a>--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-th"></i>--}}
+                {{--<span>{{trans('sidebar.Admin Panel')}}</span>--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</a>--}}
 
-                    {{--<ul class="treeview-menu @if(Request::is('admin') || Request::is('user/add') || Request::is('user/list') || Request::is('admin/options')) menu-open @endif"--}}
-                        {{--style="display: @if(Request::is('admin') || Request::is('user/add') || Request::is('user/list') || Request::is('admin/options')) block @else none @endif">--}}
-                        {{--<li @if(Request::is('admin')) class="active" @endif><a href="{{ url('/admin') }}"><i--}}
-                                        {{--class="fa fa-dashboard"></i>--}}
-                                {{--<span>{{trans('sidebar.Dashboard')}}</span></a></li>--}}
+                {{--<ul class="treeview-menu @if(Request::is('admin') || Request::is('user/add') || Request::is('user/list') || Request::is('admin/options')) menu-open @endif"--}}
+                {{--style="display: @if(Request::is('admin') || Request::is('user/add') || Request::is('user/list') || Request::is('admin/options')) block @else none @endif">--}}
+                {{--<li @if(Request::is('admin')) class="active" @endif><a href="{{ url('/admin') }}"><i--}}
+                {{--class="fa fa-dashboard"></i>--}}
+                {{--<span>{{trans('sidebar.Dashboard')}}</span></a></li>--}}
 
 
-                    {{--</ul>--}}
+                {{--</ul>--}}
                 {{--</li>--}}
 
 
@@ -42,7 +42,8 @@
                                 class="fa fa-plus"></i> <span>{{trans('sidebar.Add User')}}</span>
                     </a></li>
 
-                <li @if(Request::is('admin/user/edit')) class="active" @endif ><a href="{{ url('/admin/user/edit') }}"><i
+                <li @if(Request::is('admin/user/edit')) class="active" @endif ><a
+                            href="{{ url('/admin/user/edit') }}"><i
                                 class="fa fa-dashboard"></i> <span>{{trans('sidebar.Edit User')}}</span>
                     </a></li>
 
@@ -50,9 +51,40 @@
 
             @endif
 
+            @if(Auth::user()->type == "Doctor")
+
+            @endif
+
+
+            @if(Auth::user()->type == "Patient")
+
+            @endif
 
 
         </ul>
     </section>
     <!-- /.sidebar -->
 </aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

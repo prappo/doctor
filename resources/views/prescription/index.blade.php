@@ -32,8 +32,7 @@
     </style>
 </head>
 <body>
-<div id="editor"></div>
-<button id="cmd">Print</button>
+
 <div id="box" class="container">
     <div class="row">
         <div class="col-md-6 pull-left">
@@ -149,27 +148,44 @@
 
     </div>
 </div>
+
+
+
+<button id="btnSave" class="btn btn-success"><i class="fa fa-download"></i> Download"</button>
+
+<div id="img-out"></div>
 <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="{{url('/js')}}/html2canvas.js"></script>
+<script src="{{url('/js')}}/base64.js"></script>
+<script src="{{url('/js')}}/canvas2image.js"></script>
 <script>
 
 
-    var doc = new jsPDF();
-    var specialElementHandlers = {
-        '#editor': function (element, renderer) {
-            return true;
-        }
-    };
+    $(function() {
+        $("#btnSave").click(function() {
+            html2canvas($("#box"), {
+                onrendered: function(canvas) {
+                    theCanvas = canvas;
+                    document.body.appendChild(canvas);
 
-    $('#cmd').click(function () {
-        doc.fromHTML($('#box').html(), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
+                    var url = canvas.toDataURL();
+                    $("<a>", {
+                        href: url,
+                        download: "prescription"
+                    })
+                        .on("click", function() {$(this).remove()})
+                        .appendTo("body")[0].click()
+
+                    // Convert and download as image
+//                    Canvas2Image.saveAsPNG(canvas);
+//                    $("#img-out").append(canvas);
+                    // Clean up
+                    //document.body.removeChild(canvas);
+                }
+            });
         });
-        doc.save('sample-file.pdf');
     });
 
-    // This code is collected but useful, click below to jsfiddle link.
 
 </script>
 </body>

@@ -10,64 +10,220 @@
                 <h1>{{trans('dashboard.Dashboard')}}</h1>
             </section>
 
-            <div class="col-md-6">
-                @foreach(\App\Call::where('to',Auth::user()->id)->where('status','pending')->get() as $call)
-                    <div class="box">
-                        <div class="box-header">
-                            {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
-                        </div>
-                        <div class="box-body">
-                            {{\App\User::where('id',$call->from)->value('name')}} want to contact with you
-                        </div>
-                        <div class="box-footer">
-                            <div id="btnGroup">
-                                <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm</button>
-                                <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline</button>
-                            </div>
+            <div style="padding-left:20px;padding-right:20px;padding-top:20px" class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>{{\App\Call::where('to',Auth::user()->id)->count()}}</h3>
 
-                            <div style="display:none" id="job">
-                                <h1 id="timer"></h1>
-                                <div class="form-group">
-                                    <label class="form-control">Prescription</label>
-                                    <textarea id="pTxt" class="form-control" rows="4" placeholder="Type here.."></textarea>
-                                </div>
-                                <button data-id="{{$call->id}}" data-to="{{$call->to}}" data-from="{{$call->from}}"
-                                        id="timerStop"
-                                        class="btn btn-success btn-block">Finish
-                                </button>
-                            </div>
-                            <div id="msgDiv" style="display: none">
-                                <h3 style="color: green" id="msg"></h3>
-                            </div>
-
+                            <p>Total Requests</p>
                         </div>
+                        <div class="icon">
+                            <i class="fa fa-user-plus"></i>
+                        </div>
+
                     </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{\App\Call::where('to',Auth::user()->id)->where('status','done')->count()}}</h3>
 
-                @endforeach
+                            <p>Job Done</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-user-plus"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>{{\App\Prescription::where('')}}</h3>
+
+                            <p>User Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>65</h3>
+
+                            <p>Unique Visitors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
             </div>
+            <div style="padding-left:20px;padding-right:20px" class="row">
+                <div class="col-md-12">
+                    <marquee class="label-info"><b>News : Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                            Dolorum molestias nulla quibusdam voluptatibus.</b></marquee>
 
-            <div class="col-md-6">
-                <div class="status">
+                </div>
+            </div>
+            <div style="padding:20px" class="row">
+                <div class="col-md-6" style="border: 1px black solid">
+                    <div id="calendar"></div>
+                </div>
+                <div class="col-md-6">
+
+
+                        @foreach(\App\Call::where('to',Auth::user()->id)->where('status','pending')->get() as $call)
+                            <div class="box">
+                                <div class="box-header">
+                                    {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
+                                </div>
+                                <div class="box-body">
+                                    {{\App\User::where('id',$call->from)->value('name')}} want to contact with you
+                                </div>
+                                <div class="box-footer">
+                                    <div id="btnGroup">
+                                        <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm
+                                        </button>
+                                        <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline
+                                        </button>
+                                    </div>
+
+                                    <div style="display:none" id="job">
+                                        <h1 id="timer"></h1>
+
+
+                                        <div class="form-group">
+                                            <label>Patient Name</label>
+                                            <input type="text" id="pName"
+                                                   value="{{\App\User::where('id',$call->from)->value('name')}}"
+                                                   class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Sex</label>
+                                            <select class="form-control" id="sex">
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label>Age</label>
+                                            <input type="text" class="form-control" id="age">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Chief Complaints</label>
+                                            <textarea id="chiefComplaints" class="form-control" rows="4"
+                                                      placeholder="Type here.."></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>General Examinations</label>
+                                            <textarea id="generalExaminations" class="form-control" rows="4"
+                                                      placeholder="Type here.."></textarea>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label>Advice for investigations</label>
+                                            <textarea id="adviceForInvestigations" class="form-control" rows="4"
+                                                      placeholder="Type here.."></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Advice for Patient</label>
+                                            <textarea id="advice" class="form-control" rows="4"
+                                                      placeholder="Type here.."></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Next visit date</label>
+                                            <input type="date" class="form-control" id="date">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Prescription</label>
+                                            <textarea id="pTxt" class="form-control" rows="4"
+                                                      placeholder="Type here.."></textarea>
+                                        </div>
+
+
+                                        <button data-id="{{$call->id}}" data-to="{{$call->to}}"
+                                                data-from="{{$call->from}}"
+                                                id="timerStop"
+                                                class="btn btn-success btn-block">Finish
+                                        </button>
+                                    </div>
+                                    <div id="msgDiv" style="display: none">
+                                        <h3 style="color: green" id="msg"></h3>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        @endforeach
+
 
 
                 </div>
+
+                <div style="padding:20px" class="row">
+
+
+                </div>
+
+
             </div>
 
 
         </div>
 
+
         @include('components.footer')
+
     </div>
 @endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css">
+
+@endsection
 @section('js')
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timer.jquery/0.7.1/timer.jquery.min.js"></script>
     <script>
-
+        $('#calendar').fullCalendar({
+            weekends: true, // will hide Saturdays and Sundays
+            left: 'title',
+            center: '',
+            right: 'today prev,next'
+        });
 
         $('.btn-decline').click(function () {
             var id = $(this).attr('data-id');
-
-
             swal({
                 title: "Are you sure ?",
                 text: "Do you want to cancel this request from patient ?",
@@ -150,8 +306,8 @@
                 url: '{{url('/call/done')}}',
                 data: {
                     'id': id,
-                    'time':$('#timer').text(),
-                    'pTxt':$('#pTxt').val()
+                    'time': $('#timer').text(),
+                    'pTxt': $('#pTxt').val()
                 },
                 success: function (data) {
                     if (data == "success") {
