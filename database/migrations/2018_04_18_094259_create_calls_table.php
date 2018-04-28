@@ -24,6 +24,7 @@ class CreateCallsTable extends Migration
             $table->string('feedback_seen')->nullable();
             $table->string('p_seen')->nullable();
             $table->string('p_txt')->nullable();
+            $table->string('pId')->nullable();
 
 
             $table->timestamps();

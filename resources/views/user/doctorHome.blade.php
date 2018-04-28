@@ -315,22 +315,24 @@
                     'pTxt': $('#pTxt').val(),
                     'pName': $('#pName').val(),
                     'sex': $('#sex').val(),
-                    'age':$('#age').val(),
-                    'chiefComplaint':$('#chiefComplaints').val(),
-                    'generalExaminations':$('#generalExaminations').val(),
-                    'adviceForInvestigations':$('#adviceForInvestigations').val(),
-                    'advice':$('#advice').val(),
-                    'date':$('#date').val()
+                    'age': $('#age').val(),
+                    'chiefComplaint': $('#chiefComplaints').val(),
+                    'generalExaminations': $('#generalExaminations').val(),
+                    'adviceForInvestigations': $('#adviceForInvestigations').val(),
+                    'advice': $('#advice').val(),
+                    'date': $('#date').val()
                 },
                 success: function (data) {
-                    if (data == "success") {
+                    if (data.msg == "success") {
                         $('#timer').timer('pause');
                         $('#job').hide(200);
                         swal("Wow !", "Job done! Thank you for your service", "success");
                         $("#msg").html("Your service time : " + $("#timer").text());
                         $("#msgDiv").show(200);
+
+
                     } else {
-                        swal("Error", data, "error");
+                        swal("Error", data.msg, "error");
                     }
                 },
                 error: function (data) {

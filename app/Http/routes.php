@@ -22,6 +22,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/call/sync', 'CallController@sync');
         Route::get('/prescription', 'PrescriptionController@index');
         Route::get('/prescription/download', 'PrescriptionController@download');
+        Route::post('/prescription/get', 'PrescriptionController@getPrescription');
         Route::get('/doctor/service', 'UserController@serviceLogs');
         Route::get('/user/profile', 'UserController@profile');
 

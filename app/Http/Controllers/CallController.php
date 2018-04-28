@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Prescription;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -71,9 +72,40 @@ class CallController extends Controller
                 'job_time' => $request->time,
                 'p_txt' => $request->pTxt
             ]);
-            return "success";
+
+            $pId = rand(1000, 9999);
+
+            $prescription = new Prescription();
+            $prescription->pId = $pId;
+            $prescription->from = Call::where('id', $request->id)->value('from');
+            $prescription->to = Call::where('id', $request->id)->value('to');
+            $prescription->rx = $request->pTxt;
+            $prescription->chief_complaints = $request->chiefComplaint;
+            $prescription->general_examinations = $request->generalExaminations;
+            $prescription->advice_for_investigations = $request->adviceForInvestigations;
+            $prescription->advice = $request->advice;
+            $prescription->next_visit_date = $request->date;
+            $prescription->sex = $request->sex;
+            $prescription->age = $request->age;
+            $prescription->save();
+
+            Call::where('id', $request->id)->update([
+                'pId' => $pId
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'pId' => $pId,
+                'msg' => ''
+            ]);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+
+            return response()->json([
+                'status' => 'error',
+                'msg' => $exception->getMessage()
+            ]);
+
+
         }
     }
 
@@ -103,10 +135,12 @@ class CallController extends Controller
                 "feedback_seen" => "yes"
             ]);
 
+
             return response()->json([
                 'msg' => 'done',
                 'doctorName' => $doctorName,
-                'doctorContact' => $doctorContact
+                'doctorContact' => $doctorContact,
+                'pId' => Call::where('id', $request->id)->value('pId')
             ]);
         }
 
@@ -120,7 +154,8 @@ class CallController extends Controller
 
             return response()->json([
                 'msg' => 'p_seen',
-                'p_text' => $pTxt
+                'p_text' => $pTxt,
+                'pId'=> Call::where('id',$request->id)->value('pId')
 
             ]);
         }
