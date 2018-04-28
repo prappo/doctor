@@ -45,12 +45,12 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>{{\App\Prescription::where('')}}</h3>
+                            <h3>{{\App\Prescription::where('from',Auth::user()->id)->count()}}</h3>
 
-                            <p>User Registrations</p>
+                            <p>Prescriptions given</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fa fa-table"></i>
                         </div>
 
                     </div>
@@ -60,14 +60,14 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{\App\Feedback::where('docId',Auth::user()->id)->count()}}</h3>
 
-                            <p>Unique Visitors</p>
+                            <p>Total Feedback</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="fa fa-comments"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
                     </div>
                 </div>
                 <!-- ./col -->
@@ -80,32 +80,36 @@
                 </div>
             </div>
             <div style="padding:20px" class="row">
-                <div class="col-md-6" style="border: 1px black solid">
+                <div class="col-md-6" style="border: 1px black solid;">
                     <div id="calendar"></div>
                 </div>
                 <div class="col-md-6">
 
 
-                        @foreach(\App\Call::where('to',Auth::user()->id)->where('status','pending')->get() as $call)
-                            <div class="box">
-                                <div class="box-header">
-                                    {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
+                    @foreach(\App\Call::where('to',Auth::user()->id)->where('status','pending')->get() as $call)
+                        <div class="box">
+                            <div class="box-header">
+                                {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
+                            </div>
+                            <div class="box-body">
+                                {{\App\User::where('id',$call->from)->value('name')}} want to contact with you
+                            </div>
+                            <div class="box-footer">
+                                <div id="btnGroup">
+                                    <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm
+                                    </button>
+                                    <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline
+                                    </button>
                                 </div>
-                                <div class="box-body">
-                                    {{\App\User::where('id',$call->from)->value('name')}} want to contact with you
-                                </div>
-                                <div class="box-footer">
-                                    <div id="btnGroup">
-                                        <button class="btn btn-success btn-confirm" data-id="{{$call->id}}">Confirm
-                                        </button>
-                                        <button class="btn btn-danger btn-decline" data-id="{{$call->id}}">Decline
-                                        </button>
-                                    </div>
 
-                                    <div style="display:none" id="job">
-                                        <h1 id="timer"></h1>
+                                <div style="display:none" id="job">
+                                    <h1 id="timer"></h1>
+                                    <button id="writePrescription" class="btn btn-primary btn-block"><i
+                                                class="fa fa-edit"></i> Write Prescription
+                                    </button>
+                                    <br>
 
-
+                                    <div style="display:none" id="prescriptionDiv">
                                         <div class="form-group">
                                             <label>Patient Name</label>
                                             <input type="text" id="pName"
@@ -162,24 +166,24 @@
                                             <textarea id="pTxt" class="form-control" rows="4"
                                                       placeholder="Type here.."></textarea>
                                         </div>
-
-
-                                        <button data-id="{{$call->id}}" data-to="{{$call->to}}"
-                                                data-from="{{$call->from}}"
-                                                id="timerStop"
-                                                class="btn btn-success btn-block">Finish
-                                        </button>
-                                    </div>
-                                    <div id="msgDiv" style="display: none">
-                                        <h3 style="color: green" id="msg"></h3>
                                     </div>
 
+
+                                    <button data-id="{{$call->id}}" data-to="{{$call->to}}"
+                                            data-from="{{$call->from}}"
+                                            id="timerStop"
+                                            class="btn btn-success btn-block">Finish
+                                    </button>
                                 </div>
+                                <div id="msgDiv" style="display: none">
+                                    <h3 style="color: green" id="msg"></h3>
+                                </div>
+
                             </div>
+                        </div>
 
 
-                        @endforeach
-
+                    @endforeach
 
 
                 </div>
@@ -301,13 +305,22 @@
             var to = $(this).attr('data-to');
             var from = $(this).attr('data-from');
             var id = $(this).attr('data-id');
+
             $.ajax({
                 type: 'POST',
                 url: '{{url('/call/done')}}',
                 data: {
                     'id': id,
                     'time': $('#timer').text(),
-                    'pTxt': $('#pTxt').val()
+                    'pTxt': $('#pTxt').val(),
+                    'pName': $('#pName').val(),
+                    'sex': $('#sex').val(),
+                    'age':$('#age').val(),
+                    'chiefComplaint':$('#chiefComplaints').val(),
+                    'generalExaminations':$('#generalExaminations').val(),
+                    'adviceForInvestigations':$('#adviceForInvestigations').val(),
+                    'advice':$('#advice').val(),
+                    'date':$('#date').val()
                 },
                 success: function (data) {
                     if (data == "success") {
@@ -327,6 +340,9 @@
             });
 
 
+        });
+        $('#writePrescription').click(function () {
+            $('#prescriptionDiv').toggle();
         })
     </script>
 @endsection

@@ -38,7 +38,7 @@
                                     @foreach(\App\Call::where('to',Auth::user()->id)->where('status','pending')->get() as $call)
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                <i class="fa fa-user text-aqua"></i> <b>{{\App\User::where('id',$call->from)->value('name')}}</b> sent you a request
                                             </a>
                                         </li>
 
@@ -46,7 +46,7 @@
 
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="{{url('/user/home')}}">View all</a></li>
                         </ul>
                     </li>
 

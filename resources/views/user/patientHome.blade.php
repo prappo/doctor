@@ -78,9 +78,7 @@
                 <div class="col-md-8">
                     <div class="col-md-11">
                         <div class="box box-success">
-                            <div class="box-header">
-                                <h3><i class="fa fa-dashboard"></i> Dashboard</h3>
-                            </div>
+
 
                             <div class="box-body">
                                 @if(\App\Call::where('from',Auth::user()->id)->where('status','pending')->count() == 1)

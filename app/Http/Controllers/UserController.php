@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Call;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -79,6 +80,26 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('user.viewUsers', compact('users'));
+    }
+
+    public function serviceLogs()
+    {
+        if (Auth::user()->type == "Doctor") {
+            $data = Call::where('to', Auth::user()->id)->get();
+            return view('user.serviceLog', compact('data'));
+        } elseif (Auth::user()->type == "Patient") {
+            $data = Call::where('from', Auth::user()->id)->get();
+            return view('user.serviceLogPatient', compact('data'));
+        } else {
+            $data = Call::all();
+            return view('user.serviceLogAdmin', compact('data'));
+        }
+
+    }
+
+    public function profile()
+    {
+        return view('user.profile');
     }
 
 }

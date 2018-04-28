@@ -36,6 +36,9 @@
                 {{--</ul>--}}
                 {{--</li>--}}
 
+                <li @if(Request::is('user/home')) class="active" @endif ><a href="{{ url('/user/home') }}"><i
+                                class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a></li>
 
 
                 <li @if(Request::is('user/add')) class="active" @endif ><a href="{{ url('/user/add') }}"><i
@@ -46,18 +49,51 @@
                             href="{{ url('/admin/user/edit') }}"><i
                                 class="fa fa-dashboard"></i> <span>{{trans('sidebar.Edit User')}}</span>
                     </a></li>
+                <li @if(Request::is('admin/user/settings/update')) class="active" @endif ><a
+                            href="{{ url('/admin/user/settings/update') }}"><i
+                                class="fa fa-dashboard"></i> <span>New update</span>
+                    </a></li>
+
+                <li><a href="{{ url('/logout') }}"><i
+                                class="fa fa-sign-out"></i> <span>Logout</span>
+                    </a></li>
+
 
 
 
             @endif
 
             @if(Auth::user()->type == "Doctor")
+                <li @if(Request::is('user/home')) class="active" @endif ><a href="{{ url('/user/home') }}"><i
+                                class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a></li>
+                <li @if(Request::is('doctor/service')) class="active" @endif ><a href="{{ url('/doctor/service') }}"><i
+                                class="fa fa-files-o"></i> <span>Service Log</span>
+                    </a></li>
 
+                <li @if(Request::is('user/profile')) class="active" @endif ><a href="{{ url('/user/profile') }}"><i
+                                class="fa fa-user-md"></i> <span>Profile</span>
+                    </a></li>
+                <li><a href="{{ url('/logout') }}"><i
+                                class="fa fa-sign-out"></i> <span>Logout</span>
+                    </a></li>
             @endif
 
 
             @if(Auth::user()->type == "Patient")
+                <li @if(Request::is('user/home')) class="active" @endif ><a href="{{ url('/user/home') }}"><i
+                                class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a></li>
 
+                <li @if(Request::is('doctor/service')) class="active" @endif ><a href="{{ url('/doctor/service') }}"><i
+                                class="fa fa-files-o"></i> <span>Service Log</span>
+                    </a></li>
+
+
+
+                <li><a href="{{ url('/logout') }}"><i
+                                class="fa fa-sign-out"></i> <span>Logout</span>
+                    </a></li>
             @endif
 
 
