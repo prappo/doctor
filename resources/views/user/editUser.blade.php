@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Add User')
+@section('title','Edit User')
 @section('content')
     <div class="wrapper">
         @include('components.navigation')
@@ -15,7 +15,7 @@
                         <!-- Horizontal Form -->
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Add new user</h3>
+                                <h3 class="box-title">Update user</h3>
                             </div>
                             <!-- /.box-header -->
                             <!-- form start -->
@@ -25,8 +25,8 @@
                                         <label for="email" class="col-sm-4 control-label">Email</label>
 
                                         <div class="col-sm-8">
-                                            <input type="email" required class="form-control" id="email"
-                                                   placeholder="Email">
+                                            <input type="email" value="{{$data->email}}" required class="form-control"
+                                                   id="email" placeholder="Email">
                                         </div>
                                     </div>
 
@@ -35,8 +35,8 @@
                                         <label for="name" class="col-sm-4 control-label">Name</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="name"
-                                                   placeholder="Full Name">
+                                            <input value="{{$data->name}}" type="text" required class="form-control"
+                                                   id="name" placeholder="Full Name">
                                         </div>
                                     </div>
 
@@ -44,8 +44,9 @@
                                         <label for="name_bangla" class="col-sm-4 control-label">Name ( Bangla )</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="name_bangla"
-                                                   placeholder="Full Name">
+                                            <input value="{{$data->name_bangla}}" type="text" required
+                                                   class="form-control"
+                                                   id="name_bangla" placeholder="Full Name">
                                         </div>
                                     </div>
 
@@ -53,8 +54,8 @@
                                         <label for="bio1" class="col-sm-4 control-label">Bio 1</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="bio1"
-                                                   placeholder="Write here">
+                                            <input value="{{$data->bio}}" type="text" required class="form-control"
+                                                   id="bio1" placeholder="Write here">
                                         </div>
                                     </div>
 
@@ -62,8 +63,9 @@
                                         <label for="bio1_bangla" class="col-sm-4 control-label">Bio 1 ( Bangla )</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="bio1_bangla"
-                                                   placeholder="Write here">
+                                            <input value="{{$data->bio_bangla}}" type="text" required
+                                                   class="form-control"
+                                                   id="bio1_bangla" placeholder="Write here">
                                         </div>
                                     </div>
 
@@ -71,8 +73,8 @@
                                         <label for="bio2" class="col-sm-4 control-label">Bio 2</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="bio2"
-                                                   placeholder="Write here">
+                                            <input value="{{$data->bio_a}}" type="text" required class="form-control"
+                                                   id="bio2" placeholder="Write here">
                                         </div>
                                     </div>
 
@@ -81,8 +83,9 @@
                                             ) </label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="bio2_bangla"
-                                                   placeholder="Write here">
+                                            <input value="{{$data->bio_a_bangla}}" type="text" required
+                                                   class="form-control"
+                                                   id="bio2_bangla" placeholder="Write here">
                                         </div>
                                     </div>
 
@@ -90,7 +93,7 @@
                                         <label for="skype" class="col-sm-4 control-label">Skype </label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" required class="form-control" id="skype"
+                                            <input {{$data->skype}} type="text" required class="form-control" id="skype"
                                                    placeholder="Write here">
                                         </div>
                                     </div>
@@ -110,11 +113,7 @@
                                         <label for="type" class="col-sm-4 control-label">Type</label>
 
                                         <div class="col-sm-8">
-                                            <select class="form-control" id="type">
-                                                <option id="patient">Patient</option>
-                                                <option id="doctor">Doctor</option>
-                                                <option id="admin">Admin</option>
-                                            </select>
+                                            <input type="text" id="type" disabled value="{{$data->type}}">
                                         </div>
                                     </div>
 
@@ -122,7 +121,7 @@
                                 <!-- /.box-body -->
                                 <div class="box-footer">
 
-                                    <button id="add" type="button" class="btn btn-block btn-info pull-right">Add new
+                                    <button id="update" type="button" class="btn btn-block btn-info pull-right">Update
                                         user
                                     </button>
                                 </div>
@@ -141,9 +140,9 @@
 @endsection
 @section('js')
     <script>
-        $('#add').click(function () {
+        $('#update').click(function () {
             $.ajax({
-                url: '{{url('/user/add')}}',
+                url: '{{url('/user/update')}}',
                 type: 'POST',
                 data: {
                     'email': $('#email').val(),
@@ -159,7 +158,7 @@
                 },
                 success: function (data) {
                     if (data == "success") {
-                        swal("Success", "New user created", "success");
+                        swal("Success", "User information updated", "success");
                     } else {
                         swal("Error", data, "error");
                     }

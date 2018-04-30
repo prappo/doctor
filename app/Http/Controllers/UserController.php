@@ -23,8 +23,13 @@ class UserController extends Controller
 
             $user = new User();
             $user->name = $request->name;
+            $user->bio = $request->bio1;
+            $user->bio_bangla = $request->bio1_bangla;
+            $user->bio_a = $request->bio2;
+            $user->bio_a_bangla = $request->bio2_bangla;
             $user->email = $request->email;
             $user->type = $request->type;
+            $user->skype = $request->skype;
             $user->password = bcrypt($request->password);
             $user->save();
             return "success";
@@ -44,16 +49,48 @@ class UserController extends Controller
     }
 
 
+    public function viewUsers()
+    {
+        return view('user.viewUsers');
+    }
+
+    public function editUser($id)
+    {
+        $data = User::where('id', $id)->first();
+        return view('user.editUser', compact('data'));
+    }
+
+
     public function updateUser(Request $request)
     {
         // update user information
 
         try {
-            User::where('id', $request->userId)->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
+            if ($request->password == "") {
+                User::where('id', $request->userId)->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'name_bangla' => $request->name_bangla,
+                    'bio' => $request->bio1,
+                    'bio_bangla' => $request->bio1_bangla,
+                    'bio_a' => $request->bio2,
+                    'bio_a_bangla' => $request->bio2_bangla,
+                    'skype' => $request->skype
+                ]);
+            } else {
+                User::where('id', $request->userId)->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'name_bangla' => $request->name_bangla,
+                    'bio' => $request->bio1,
+                    'bio_bangla' => $request->bio1_bangla,
+                    'bio_a' => $request->bio2,
+                    'bio_a_bangla' => $request->bio2_bangla,
+                    'skype' => $request->skype,
+                    'password' => bcrypt($request->password)
+                ]);
+            }
+
             return "success";
         } catch (\Exception $exception) {
             return $exception->getMessage();
@@ -65,22 +102,17 @@ class UserController extends Controller
     {
         // delete a user
 
-        if (User::where('id', $request->userId)->value('type') == "admin") {
+        if (User::where('id', $request->id)->value('type') == "admin") {
             return "You can't delete admin account";
         }
         try {
-            User::where('id', $request->userId)->delete();
+            User::where('id', $request->id)->delete();
             return "success";
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
     }
 
-    public function viewUsers(Request $request)
-    {
-        $users = User::all();
-        return view('user.viewUsers', compact('users'));
-    }
 
     public function serviceLogs()
     {
@@ -100,6 +132,10 @@ class UserController extends Controller
     public function profile()
     {
         return view('user.profile');
+    }
+
+    public function calls(){
+        return view('request.index');
     }
 
 }

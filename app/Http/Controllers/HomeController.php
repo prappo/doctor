@@ -24,4 +24,9 @@ class HomeController extends Controller
         }
 
     }
+
+    public function doctors($cat){
+        $doctors = User::where('type','Doctor')->where('cat',$cat)->get();
+        return view('user.patientHome', compact('doctors'));
+    }
 }

@@ -76,7 +76,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{url('/profile')}}"
+                                    <a href="{{url('/user/profile')}}"
                                        class="btn btn-default btn-flat">{{trans('navigation.Profile')}}</a>
                                 </div>
                                 <div class="pull-right">

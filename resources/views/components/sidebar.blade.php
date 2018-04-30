@@ -49,9 +49,24 @@
                             href="{{ url('/admin/user/edit') }}"><i
                                 class="fa fa-dashboard"></i> <span>{{trans('sidebar.Edit User')}}</span>
                     </a></li>
+
+                <li @if(Request::is('category/add')) class="active" @endif ><a
+                            href="{{ url('/category/add') }}"><i class="fa fa-th-list"></i> <span>Categories</span>
+                    </a>
+                </li>
+
+
+                <li @if(Request::is('user/prescriptions')) class="active" @endif ><a href="{{ url('/user/prescriptions') }}"><i
+                                class="fa fa-edit"></i> <span>All Prescriptions</span>
+                    </a></li>
+
+                <li @if(Request::is('user/calls')) class="active" @endif ><a href="{{ url('/user/calls') }}"><i
+                                class="fa fa-phone"></i> <span>Requests</span>
+                    </a></li>
+
                 <li @if(Request::is('admin/user/settings/update')) class="active" @endif ><a
                             href="{{ url('/admin/user/settings/update') }}"><i
-                                class="fa fa-dashboard"></i> <span>New update</span>
+                                class="fa fa-gears"></i> <span>Settings</span>
                     </a></li>
 
                 <li><a href="{{ url('/logout') }}"><i
@@ -71,6 +86,10 @@
                                 class="fa fa-files-o"></i> <span>Service Log</span>
                     </a></li>
 
+                <li @if(Request::is('user/prescriptions')) class="active" @endif ><a href="{{ url('/user/prescriptions') }}"><i
+                                class="fa fa-edit"></i> <span>My Prescriptions</span>
+                    </a></li>
+
                 <li @if(Request::is('user/profile')) class="active" @endif ><a href="{{ url('/user/profile') }}"><i
                                 class="fa fa-user-md"></i> <span>Profile</span>
                     </a></li>
@@ -87,6 +106,10 @@
 
                 <li @if(Request::is('doctor/service')) class="active" @endif ><a href="{{ url('/doctor/service') }}"><i
                                 class="fa fa-files-o"></i> <span>Service Log</span>
+                    </a></li>
+
+                <li @if(Request::is('user/prescriptions')) class="active" @endif ><a href="{{ url('/user/prescriptions') }}"><i
+                                class="fa fa-edit"></i> <span>My Prescriptions</span>
                     </a></li>
 
 

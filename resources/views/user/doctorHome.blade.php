@@ -74,8 +74,8 @@
             </div>
             <div style="padding-left:20px;padding-right:20px" class="row">
                 <div class="col-md-12">
-                    <marquee class="label-info"><b>News : Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Dolorum molestias nulla quibusdam voluptatibus.</b></marquee>
+                    <marquee class="label-info"><b> {{"News :".\App\Http\Controllers\SettingsController::get_news()}}</b>
+                    </marquee>
 
                 </div>
             </div>
@@ -323,7 +323,7 @@
                     'date': $('#date').val()
                 },
                 success: function (data) {
-                    if (data.msg == "success") {
+                    if (data.status == "success") {
                         $('#timer').timer('pause');
                         $('#job').hide(200);
                         swal("Wow !", "Job done! Thank you for your service", "success");
@@ -334,6 +334,8 @@
                     } else {
                         swal("Error", data.msg, "error");
                     }
+
+                    console.log(data.responseText);
                 },
                 error: function (data) {
                     swal("Error", "Something went wrong", "error");

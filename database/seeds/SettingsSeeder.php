@@ -15,13 +15,13 @@ class SettingsSeeder extends Seeder
     public function run()
     {
 
-
         User::create([
             'name' => 'Super Admin',
             'email' => 'admin@email.com',
             'password' => bcrypt('123456'),
             'type' => 'admin',
         ]);
+
 
     }
 }
