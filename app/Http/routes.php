@@ -38,8 +38,10 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::post('/category/assign', 'CategoryController@assign');
         Route::post('/category/add', 'CategoryController@add');
-        Route::get('/doctor/category/{cat}','HomeController@doctors');
-        Route::get('/user/calls','UserController@calls');
+        Route::get('/doctor/category/{cat}', 'HomeController@doctors');
+        Route::get('/user/calls', 'UserController@calls');
+        Route::get('/admin/user/settings/update', 'SettingsController@index');
+        Route::post('/settings/update', 'SettingsController@update');
 
     });
 

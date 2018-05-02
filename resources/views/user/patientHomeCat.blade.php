@@ -37,7 +37,115 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        @if($doctors)
 
+                            @foreach($doctors as $user)
+
+                                @if($user->isOnline())
+                                    <div class="col-md-12">
+                                        <!-- Widget: user widget style 1 -->
+                                        <div class="box box-widget widget-user">
+                                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                                            <div class="widget-user-header bg-aqua-active">
+                                                <h3 class="widget-user-username"><i
+                                                            class="fa fa-user-md"></i> {{$user->name}}</h3>
+                                            </div>
+                                            <div class="widget-user-image">
+                                                <img class="img-circle" src="{{url('/images/optimus/logo-login.png')}}"
+                                                     alt="User Avatar">
+                                            </div>
+                                            <div class="box-footer">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <b> {{$user->bio}} </b>
+                                                    </div>
+
+
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-sm-6 border-right">
+                                                        <div class="description-block">
+                                                            <h5 class="description-header"><a href="#"><i
+                                                                            class="fa fa-circle text-success"></i> <b
+                                                                            style="color: green">Online</b></a></h5>
+
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+                                                    <!-- /.col -->
+                                                    <div class="col-sm-6">
+                                                        <div class="description-block">
+                                                            <button data-name="{{$user->name}}" data-to="{{$user->id}}"
+                                                                    data-from="{{Auth::user()->id}}"
+                                                                    id="{{$user->id}}"
+                                                                    class="btn btn-doc btn-success btn-block"><i
+                                                                        class="fa fa-phone"></i> Contact
+                                                            </button>
+
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+
+                                                </div>
+                                                <!-- /.row -->
+                                            </div>
+                                        </div>
+                                        <!-- /.widget-user -->
+                                    </div>
+
+                                @endif
+
+                            @endforeach
+                        @endif
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="col-md-11">
+                            <div class="box box-success">
+
+
+                                <div class="box-body">
+                                    @if(\App\Call::where('from',Auth::user()->id)->where('status','pending')->count() == 1)
+                                        <div id="goo">
+                                            <input type="hidden" id="jobId"
+                                                   value="{{\App\Call::where('from',Auth::user()->id)->where('status','pending')->value('id')}}">
+                                        </div>
+
+                                    @endif
+                                    @foreach(\App\Call::where('from',Auth::user()->id)->where('status','pending')->get() as $call)
+                                        <div class="box">
+                                            <div class="box-header">
+                                                {{\Carbon\Carbon::parse($call->created_at)->diffForHumans()}}
+                                            </div>
+                                            <div class="box-body">
+                                                You sent a request
+                                                to {{\App\User::where('id',$call->to)->value('name')}}.
+                                                Please wait.
+                                            </div>
+                                            <div class="box-footer">
+
+                                                <button class="btn btn-danger btn-decline" data-id="{{$call->id}}"><i
+                                                            class="fa fa-times"></i> Cancel the request
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    @endforeach
+
+                                </div>
+                                <div class="box-footer">
+                                    <p id="msg"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -437,8 +545,8 @@
             $('#modal-prescription').modal();
         });
 
-        $('#category').on('change', function () {
-            window.location.replace('{{url('/doctor/category')}}/' + $(this).val());
+        $('#category').on('change',function () {
+            window.location.replace('{{url('/doctor/category')}}/'+$(this).val());
         })
     </script>
 @endsection
