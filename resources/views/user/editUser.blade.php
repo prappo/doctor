@@ -145,6 +145,7 @@
                 url: '{{url('/user/update')}}',
                 type: 'POST',
                 data: {
+                    'userId':'{{$id}}',
                     'email': $('#email').val(),
                     'name': $('#name').val(),
                     'name_bangla': $('#name_bangla').val(),
@@ -159,6 +160,7 @@
                 success: function (data) {
                     if (data == "success") {
                         swal("Success", "User information updated", "success");
+                        location.reload();
                     } else {
                         swal("Error", data, "error");
                     }

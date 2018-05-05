@@ -64,6 +64,10 @@
                                 class="fa fa-phone"></i> <span>Requests</span>
                     </a></li>
 
+                <li @if(Request::is('user/feedback')) class="active" @endif ><a href="{{ url('/user/feedback') }}"><i
+                                class="fa fa-reply"></i> <span>Feedback</span>
+                    </a></li>
+
                 <li @if(Request::is('admin/user/settings/update')) class="active" @endif ><a
                             href="{{ url('/admin/user/settings/update') }}"><i
                                 class="fa fa-gears"></i> <span>Settings</span>
@@ -90,6 +94,10 @@
                                 class="fa fa-edit"></i> <span>My Prescriptions</span>
                     </a></li>
 
+                <li @if(Request::is('user/feedback')) class="active" @endif ><a href="{{ url('/user/feedback') }}"><i
+                                class="fa fa-reply"></i> <span>Feedback</span>
+                    </a></li>
+
                 <li @if(Request::is('user/profile')) class="active" @endif ><a href="{{ url('/user/profile') }}"><i
                                 class="fa fa-user-md"></i> <span>Profile</span>
                     </a></li>
@@ -110,6 +118,10 @@
 
                 <li @if(Request::is('user/prescriptions')) class="active" @endif ><a href="{{ url('/user/prescriptions') }}"><i
                                 class="fa fa-edit"></i> <span>My Prescriptions</span>
+                    </a></li>
+
+                <li @if(Request::is('user/feedback')) class="active" @endif ><a href="{{ url('/user/feedback') }}"><i
+                                class="fa fa-reply"></i> <span>Feedback</span>
                     </a></li>
 
 

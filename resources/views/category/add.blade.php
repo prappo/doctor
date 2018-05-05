@@ -73,6 +73,15 @@
                         </button>
                     </div>
                 </div>
+                <hr>
+                <div class="row" style="padding:20px">
+                    @foreach(\App\User::where('type','Doctor')->get() as $doctor)
+                        @if($doctor->cat != "")
+                            <i style="color:blue" class="fa fa-circle"></i> {{$doctor->name}} assigned to {{\App\Category::where('id',$doctor->cat)->value('value')}} category <br>
+
+                        @endif
+                    @endforeach
+                </div>
 
             </div>
 

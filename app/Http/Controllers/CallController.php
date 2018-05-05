@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Feedback;
 use App\Prescription;
 use App\User;
 use Illuminate\Http\Request;
@@ -130,7 +131,8 @@ class CallController extends Controller
         if (Call::where('id', $request->id)->value('status') == "done" && Call::where('id', $request->id)->value('feedback_seen') == "no") {
             $doctorName = User::where('id', Call::where('id', $request->id)->value('to'))->value('name');
             $doctorContact = User::where('id', Call::where('id', $request->id)->value('to'))->value('skype');
-
+            $doctorId = Call::where('id', $request->id)->value('to');
+            $patientId = Call::where('id', $request->id)->value('from');
             Call::where('id', $request->id)->update([
                 "feedback_seen" => "yes"
             ]);
@@ -140,7 +142,9 @@ class CallController extends Controller
                 'msg' => 'done',
                 'doctorName' => $doctorName,
                 'doctorContact' => $doctorContact,
-                'pId' => Call::where('id', $request->id)->value('pId')
+                'pId' => Call::where('id', $request->id)->value('pId'),
+                'doctorId' => $doctorId,
+                'patientId' => $patientId
             ]);
         }
 
@@ -155,7 +159,7 @@ class CallController extends Controller
             return response()->json([
                 'msg' => 'p_seen',
                 'p_text' => $pTxt,
-                'pId'=> Call::where('id',$request->id)->value('pId')
+                'pId' => Call::where('id', $request->id)->value('pId')
 
             ]);
         }
@@ -164,7 +168,40 @@ class CallController extends Controller
     }
 
 
+    public function feedback(Request $request)
+    {
+        try {
+            $feedback = new Feedback();
+            $feedback->userId = Auth::user()->id;
+            $feedback->docId = $request->doctorId;
+            $feedback->comment = $request->comment;
+            $feedback->save();
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function viewFeedback()
+    {
+        if (Auth::user()->type == "admin") {
+            $datas = Feedback::all();
+            return view('user.feedbacks', compact('datas'));
+        } elseif (Auth::user()->type == "Doctor") {
+            $datas = Feedback::where('docId', Auth::user()->id)->get();
+            return view('user.feedbacks', compact('datas'));
+
+        } elseif (Auth::user()->type == "Patient") {
+            $datas = Feedback::where('userId', Auth::user()->id)->get();
+            return view('user.feedbacks', compact('datas'));
+        }
+    }
+
+
 }
+
+
+
+
 
 
 

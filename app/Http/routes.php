@@ -42,6 +42,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/user/calls', 'UserController@calls');
         Route::get('/admin/user/settings/update', 'SettingsController@index');
         Route::post('/settings/update', 'SettingsController@update');
+        Route::post('/user/feedback', 'CallController@feedback');
+        Route::get('/user/feedback', 'CallController@viewFeedback');
 
     });
 

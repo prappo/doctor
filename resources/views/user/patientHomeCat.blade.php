@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Dashboard')
+@section('title','Dashboard ( Patient )')
 @section('content')
     <div class="wrapper">
         @include('components.navigation')
@@ -162,7 +162,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Write your FeedBack</label>
-                            <textarea class="form-control" rows="3" placeholder="Write here ..."></textarea>
+                            <textarea id="txtFeedback" class="form-control" rows="3" placeholder="Write here ..."></textarea>
                             <br>
                             <button id="getP" class="btn btn-primary"><i
                                         class="fa fa-external-link"></i> Click here to get your prescription
@@ -170,6 +170,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" id="docId">
+                        <input type="hidden" id="patId">
 
                         <button id="btnModalHide" type="button" class="btn btn-outline">Submit Feedback</button>
                     </div>
@@ -526,7 +528,11 @@
 
                             }
 
+
                         });
+
+                        $('#docId').val(data.doctorId);
+                        $('#patId').val(data.patientId);
                         $('#modal-feedback').modal();
 //                        alert("Feed back form will appear");
                     }
@@ -537,6 +543,22 @@
         }
 
         $('#btnModalHide').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '{{url('/user/feedback')}}',
+                data: {
+                    'doctorId': $('#docId').val(),
+                    'patientId': $('#patId').val(),
+                    'comment': $('#txtFeedback').val()
+                },
+                success: function (data) {
+                    console.log(data.responseText);
+                },
+                error: function (data) {
+                    console.log(data.responseText);
+                }
+            });
+
             $('#modal-feedback').modal('hide');
             swal("Thanks !", "Your feedback will help us", "success");
         });
@@ -545,8 +567,8 @@
             $('#modal-prescription').modal();
         });
 
-        $('#category').on('change',function () {
-            window.location.replace('{{url('/doctor/category')}}/'+$(this).val());
+        $('#category').on('change', function () {
+            window.location.replace('{{url('/doctor/category')}}/' + $(this).val());
         })
     </script>
 @endsection

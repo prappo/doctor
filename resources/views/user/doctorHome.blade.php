@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Dashboard')
+@section('title','Dashboard ( Doctor )')
 @section('content')
     <div class="wrapper">
         @include('components.navigation')
