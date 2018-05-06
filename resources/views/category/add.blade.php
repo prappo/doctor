@@ -75,12 +75,43 @@
                 </div>
                 <hr>
                 <div class="row" style="padding:20px">
-                    @foreach(\App\User::where('type','Doctor')->get() as $doctor)
-                        @if($doctor->cat != "")
-                            <i style="color:blue" class="fa fa-circle"></i> {{$doctor->name}} assigned to {{\App\Category::where('id',$doctor->cat)->value('value')}} category <br>
+                    <div class="col-md-6">
+                        @foreach(\App\Category::all() as $cat)
+                            <li style="list-style-type: none">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3><i class="fa fa-circle-o"
+                                               style="color:black"></i> {{$cat->value}}</h3>
+                                    </div>
 
-                        @endif
-                    @endforeach
+                                    <div class="box-footer">
+                                        <div class="btn-group">
+                                            <button data-id="{{$cat->id}}" class="btn btn-danger btn-xs"><i
+                                                        class="fa fa-times"></i> Delete
+                                            </button>
+                                            <button data-value="{{$cat->value}}" data-id="{{$cat->id}}"
+                                                    class="btn btn-edit btn-primary btn-xs"><i
+                                                        class="fa fa-edit"></i> Edit
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </li>
+
+                        @endforeach
+                    </div>
+                    <div class="col-md-6">
+                        @foreach(\App\User::where('type','Doctor')->get() as $doctor)
+                            @if($doctor->cat != "")
+                                <i style="color:blue" class="fa fa-circle"></i> {{$doctor->name}} assigned
+                                to {{\App\Category::where('id',$doctor->cat)->value('value')}} category <br>
+
+                            @endif
+                        @endforeach
+                    </div>
+
                 </div>
 
             </div>
@@ -138,7 +169,65 @@
                     console.log(data.responseText);
                 }
             });
-        })
+        });
+        $('.btn-danger').click(function (data) {
+            var id = $(this).attr('data-id');
+            if (confirm("Are you sure you want to delete this category ?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url('/cat/delete')}}',
+                    data: {
+                        'id': id
+                    },
+                    success: function (data) {
+                        if (data == "success") {
+                            location.reload();
+                        } else {
+                            swal("Error !", data, "warning");
+                        }
+                    },
+                    error: function (data) {
+                        swal("Error", "Something went wrong", "error");
+                        console.log(data.responseText);
+                    }
+                })
+            }
+
+        });
+
+        $('.btn-edit').click(function () {
+            var id = $(this).attr('data-id');
+            var value = $(this).attr('data-value');
+            var msgBox = prompt(value);
+            if (msgBox != null) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url('/cat/edit')}}',
+                    data: {
+                        'id': id,
+                        'value': msgBox
+                    },
+                    success: function (data) {
+                        if (data == "success") {
+                            alert("Success");
+                            location.reload();
+                        } else {
+                            swal("Error", data, "warning");
+                        }
+                    },
+                    error: function (data) {
+                        swal("Error", "Something went wrong", "warning");
+                        console.log(data.responseText);
+                    }
+
+                });
+            } else {
+                alert("Can't be empty");
+            }
+
+        });
+
+
     </script>
 @endsection
 

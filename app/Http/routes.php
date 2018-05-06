@@ -35,6 +35,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/settings/seed', 'SettingsController@seed');
 
         Route::get('/category/add', 'CategoryController@addIndex');
+        Route::post('/cat/delete', 'CategoryController@delete');
+        Route::post('/cat/edit', 'CategoryController@edit');
 
         Route::post('/category/assign', 'CategoryController@assign');
         Route::post('/category/add', 'CategoryController@add');

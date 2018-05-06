@@ -47,7 +47,41 @@ class CategoryController extends Controller
         }
 
     }
+
+    public function delete(Request $request)
+    {
+        try {
+            Category::where('id', $request->id)->delete();
+            return "success";
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        if($request->value == ""){
+            return "Can't be empty";
+        }
+        try {
+            Category::where('id', $request->id)->update([
+                'value' => $request->value
+            ]);
+            return "success";
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
 
 
 
