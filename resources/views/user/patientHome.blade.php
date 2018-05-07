@@ -7,9 +7,35 @@
 
         <div class="content-wrapper">
             <section class="content-header">
-
+                <h1>{{Auth::user()->name}}</h1>
             </section>
             <div class="content">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-aqua"><i class="fa fa-reply"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Feedback</span>
+                                <span class="info-box-number">{{\App\Feedback::where('userId',Auth::user()->id)->count()}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-send"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Request sent</span>
+                                <span class="info-box-number">{{\App\Call::where('from',Auth::user()->id)->count()}}</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                </div>
                 <div style="padding-left: 15px;padding-right: 15px" class="row">
                     <div class="col-md-12">
                         <marquee class="label-info">
